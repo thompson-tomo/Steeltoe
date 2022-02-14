@@ -16,13 +16,7 @@ namespace Steeltoe.Discovery.Eureka
 
         protected static readonly DiscoveryManager _instance = new ();
 
-        public static DiscoveryManager Instance
-        {
-            get
-            {
-                return _instance;
-            }
-        }
+        public static DiscoveryManager Instance => _instance;
 
         public virtual DiscoveryClient Client { get; protected internal set; }
 
@@ -30,25 +24,13 @@ namespace Steeltoe.Discovery.Eureka
 
         public virtual IEurekaInstanceConfig InstanceConfig { get; protected internal set; }
 
-        public virtual ILookupService LookupService
-        {
-            get
-            {
-                return Client;
-            }
-        }
+        public virtual ILookupService LookupService => Client;
 
         protected ILogger _logger;
 
-        public virtual void Initialize(IEurekaClientConfig clientConfig, ILoggerFactory logFactory = null)
-        {
-            Initialize(clientConfig, (IEurekaHttpClient)null, logFactory);
-        }
+        public virtual void Initialize(IEurekaClientConfig clientConfig, ILoggerFactory logFactory = null) => Initialize(clientConfig, (IEurekaHttpClient)null, logFactory);
 
-        public virtual void Initialize(IEurekaClientConfig clientConfig, IEurekaInstanceConfig instanceConfig, ILoggerFactory logFactory = null)
-        {
-            Initialize(clientConfig, instanceConfig, null, logFactory);
-        }
+        public virtual void Initialize(IEurekaClientConfig clientConfig, IEurekaInstanceConfig instanceConfig, ILoggerFactory logFactory = null) => Initialize(clientConfig, instanceConfig, null, logFactory);
 
         public virtual void Initialize(IEurekaClientConfig clientConfig, IEurekaHttpClient httpClient, ILoggerFactory logFactory = null)
         {

@@ -25,26 +25,9 @@ namespace Steeltoe.Discovery.Consul.Discovery
         private readonly ConsulDiscoveryOptions _options;
         private readonly ILogger<TtlScheduler> _logger;
 
-        internal ConsulDiscoveryOptions Options
-        {
-            get
-            {
-                if (_optionsMonitor != null)
-                {
-                    return _optionsMonitor.CurrentValue;
-                }
+        internal ConsulDiscoveryOptions Options => _optionsMonitor != null ? _optionsMonitor.CurrentValue : _options;
 
-                return _options;
-            }
-        }
-
-        internal ConsulHeartbeatOptions HeartbeatOptions
-        {
-            get
-            {
-                return Options.Heartbeat;
-            }
-        }
+        internal ConsulHeartbeatOptions HeartbeatOptions => Options.Heartbeat;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TtlScheduler"/> class.

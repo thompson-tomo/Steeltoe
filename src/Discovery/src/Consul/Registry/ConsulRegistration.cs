@@ -22,18 +22,7 @@ namespace Steeltoe.Discovery.Consul.Registry
         private readonly IOptionsMonitor<ConsulDiscoveryOptions> _optionsMonitor;
         private readonly ConsulDiscoveryOptions _options;
 
-        internal ConsulDiscoveryOptions Options
-        {
-            get
-            {
-                if (_optionsMonitor != null)
-                {
-                    return _optionsMonitor.CurrentValue;
-                }
-
-                return _options;
-            }
-        }
+        internal ConsulDiscoveryOptions Options => _optionsMonitor != null ? _optionsMonitor.CurrentValue : _options;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConsulRegistration"/> class.
@@ -91,22 +80,10 @@ namespace Steeltoe.Discovery.Consul.Registry
         public int Port { get; private set; }
 
         /// <inheritdoc/>
-        public bool IsSecure
-        {
-            get
-            {
-                return Options.Scheme == "https";
-            }
-        }
+        public bool IsSecure => Options.Scheme == "https";
 
         /// <inheritdoc/>
-        public Uri Uri
-        {
-            get
-            {
-                return new Uri($"{Options.Scheme}://{Host}:{Port}");
-            }
-        }
+        public Uri Uri => new Uri($"{Options.Scheme}://{Host}:{Port}");
 
         /// <inheritdoc/>
         public IDictionary<string, string> Metadata { get; private set; }

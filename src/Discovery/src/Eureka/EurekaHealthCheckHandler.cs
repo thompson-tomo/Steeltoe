@@ -89,24 +89,13 @@ namespace Steeltoe.Discovery.Eureka
             return final;
         }
 
-        protected internal virtual InstanceStatus MapToInstanceStatus(HealthStatus status)
-        {
-            if (status == HealthStatus.OUT_OF_SERVICE)
+        protected internal virtual InstanceStatus MapToInstanceStatus(HealthStatus status) =>
+            status switch
             {
-                return InstanceStatus.OUT_OF_SERVICE;
-            }
-
-            if (status == HealthStatus.DOWN)
-            {
-                return InstanceStatus.DOWN;
-            }
-
-            if (status == HealthStatus.UP)
-            {
-                return InstanceStatus.UP;
-            }
-
-            return InstanceStatus.UNKNOWN;
-        }
+                HealthStatus.OUT_OF_SERVICE => InstanceStatus.OUT_OF_SERVICE,
+                HealthStatus.DOWN => InstanceStatus.DOWN,
+                HealthStatus.UP => InstanceStatus.UP,
+                _ => InstanceStatus.UNKNOWN
+            };
     }
 }

@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the Apache 2.0 License.
 // See the LICENSE file in the project root for more information.
 
@@ -26,18 +26,7 @@ namespace Steeltoe.Discovery.Consul.Discovery
         private readonly IServiceInstance _thisServiceInstance;
         private readonly IConsulServiceRegistrar _registrar;
 
-        internal ConsulDiscoveryOptions Options
-        {
-            get
-            {
-                if (_optionsMonitor != null)
-                {
-                    return _optionsMonitor.CurrentValue;
-                }
-
-                return _options;
-            }
-        }
+        internal ConsulDiscoveryOptions Options => _optionsMonitor != null ? _optionsMonitor.CurrentValue : _options;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConsulDiscoveryClient"/> class.
@@ -84,34 +73,19 @@ namespace Steeltoe.Discovery.Consul.Discovery
         #region Implementation of IDiscoveryClient
 
         /// <inheritdoc/>
-        public IServiceInstance GetLocalServiceInstance()
-        {
-            return _thisServiceInstance;
-        }
+        public IServiceInstance GetLocalServiceInstance() => _thisServiceInstance;
 
         /// <inheritdoc/>
-        public IList<IServiceInstance> GetInstances(string serviceId)
-        {
-            return GetInstances(serviceId, QueryOptions.Default);
-        }
+        public IList<IServiceInstance> GetInstances(string serviceId) => GetInstances(serviceId, QueryOptions.Default);
 
         /// <inheritdoc/>
-        public Task ShutdownAsync()
-        {
-            return Task.CompletedTask;
-        }
+        public Task ShutdownAsync() => Task.CompletedTask;
 
         /// <inheritdoc/>
         public string Description { get; } = "HashiCorp Consul Client";
 
         /// <inheritdoc/>
-        public IList<string> Services
-        {
-            get
-            {
-                return GetServicesAsync().GetAwaiter().GetResult();
-            }
-        }
+        public IList<string> Services => GetServicesAsync().GetAwaiter().GetResult();
 
         #endregion Implementation of IDiscoveryClient
 
@@ -121,10 +95,7 @@ namespace Steeltoe.Discovery.Consul.Discovery
         /// <param name="serviceId">the service id to get instances for</param>
         /// <param name="queryOptions">any Consul query options to use when doing lookup</param>
         /// <returns>the list of service instances</returns>
-        public IList<IServiceInstance> GetInstances(string serviceId, QueryOptions queryOptions = null)
-        {
-            return GetInstancesAsync(serviceId, queryOptions).GetAwaiter().GetResult();
-        }
+        public IList<IServiceInstance> GetInstances(string serviceId, QueryOptions queryOptions = null) => GetInstancesAsync(serviceId, queryOptions).GetAwaiter().GetResult();
 
         /// <summary>
         /// Returns all instances for all services

@@ -30,14 +30,8 @@ namespace Steeltoe.Discovery.Eureka.Transport
             return result;
         }
 
-        public override void Write(Utf8JsonWriter writer, IList<JsonInstanceInfo> value, JsonSerializerOptions options)
-        {
-            writer.WriteStringValue(value.ToString());
-        }
+        public override void Write(Utf8JsonWriter writer, IList<JsonInstanceInfo> value, JsonSerializerOptions options) => writer.WriteStringValue(value.ToString());
 
-        public override bool CanConvert(Type typeToConvert)
-        {
-            return typeToConvert == typeof(IList<JsonInstanceInfo>);
-        }
+        public override bool CanConvert(Type typeToConvert) => typeToConvert == typeof(IList<JsonInstanceInfo>);
     }
 }

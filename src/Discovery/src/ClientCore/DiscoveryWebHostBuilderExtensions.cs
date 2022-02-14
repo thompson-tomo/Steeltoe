@@ -21,7 +21,7 @@ namespace Steeltoe.Discovery.Client
         /// <exception cref="AmbiguousMatchException">Thrown if multiple IDiscoveryClient implementations are configured</exception>
         /// <exception cref="ConnectorException">Thrown if no service info with expected name or type are found or when multiple service infos are found and a single was expected</exception>
         public static IWebHostBuilder AddDiscoveryClient(this IWebHostBuilder hostBuilder) =>
-            hostBuilder.ConfigureServices((context, collection) => collection.AddDiscoveryClient());
+            hostBuilder.ConfigureServices((context, collection) => collection.AddDiscoveryClient(context.Configuration));
 
         /// <summary>
         /// Adds service discovery to your application. This method can be used in place of configuration via your Startup class.<para />

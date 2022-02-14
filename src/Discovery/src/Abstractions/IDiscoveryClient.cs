@@ -15,6 +15,10 @@ namespace Steeltoe.Discovery
         /// <returns>The IServiceInstance</returns>
         IServiceInstance GetLocalServiceInstance();
 
+        /// <summary>
+        /// Perform any shutdown-related tasks (such as de-registering the service instance)
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         Task ShutdownAsync();
     }
 }

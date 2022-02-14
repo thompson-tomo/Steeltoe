@@ -27,13 +27,11 @@ namespace Steeltoe.Discovery.Kubernetes
             ConfigureKubernetesServices(services);
         }
 
-        public bool IsConfigured(IConfiguration configuration, IServiceInfo serviceInfo = null)
-        {
-            return configuration
+        public bool IsConfigured(IConfiguration configuration, IServiceInfo serviceInfo = null) =>
+            configuration
                 .GetSection(KubernetesDiscoveryOptions.KUBERNETES_DISCOVERY_CONFIGURATION_PREFIX)
                 .GetChildren()
                 .Any();
-        }
 
         internal static void ConfigureKubernetesServices(IServiceCollection services)
         {

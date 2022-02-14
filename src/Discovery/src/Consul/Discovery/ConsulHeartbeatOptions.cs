@@ -35,13 +35,7 @@ namespace Steeltoe.Discovery.Consul.Discovery
         /// <summary>
         /// Gets the time to live setting
         /// </summary>
-        public string Ttl
-        {
-            get
-            {
-                return TtlValue.ToString() + TtlUnit;
-            }
-        }
+        public string Ttl => TtlValue.ToString() + TtlUnit;
 
         internal TimeSpan ComputeHearbeatInterval()
         {

@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the Apache 2.0 License.
 // See the LICENSE file in the project root for more information.
 
@@ -24,10 +24,7 @@ namespace Steeltoe.Discovery.Eureka.AppInfo
 
         public string Sid
         {
-            get
-            {
-                return _sid;
-            }
+            get => _sid;
 
             internal set
             {
@@ -62,10 +59,7 @@ namespace Steeltoe.Discovery.Eureka.AppInfo
 
         public InstanceStatus Status
         {
-            get
-            {
-                return _status;
-            }
+            get => _status;
 
             internal set
             {
@@ -87,10 +81,7 @@ namespace Steeltoe.Discovery.Eureka.AppInfo
 
         public Dictionary<string, string> Metadata
         {
-            get
-            {
-                return _metaData;
-            }
+            get => _metaData;
 
             internal set
             {
@@ -115,10 +106,7 @@ namespace Steeltoe.Discovery.Eureka.AppInfo
 
         public bool IsDirty
         {
-            get
-            {
-                return _isDirty;
-            }
+            get => _isDirty;
 
             internal set
             {

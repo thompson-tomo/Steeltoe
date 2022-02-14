@@ -14,45 +14,16 @@ namespace Steeltoe.Common.Http.Test
     {
         private readonly IServiceInstance _instance;
 
-        public TestDiscoveryClient(IServiceInstance instance = null)
-        {
-            _instance = instance;
-        }
+        public TestDiscoveryClient(IServiceInstance instance = null) => _instance = instance;
 
-        public string Description
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public string Description => throw new NotImplementedException();
 
-        public IList<string> Services
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public IList<string> Services => throw new NotImplementedException();
 
-        public IList<IServiceInstance> GetInstances(string serviceId)
-        {
-            if (_instance != null)
-            {
-                return new List<IServiceInstance>() { _instance };
-            }
+        public IList<IServiceInstance> GetInstances(string serviceId) => _instance != null ? new List<IServiceInstance>() { _instance } : new List<IServiceInstance>();
 
-            return new List<IServiceInstance>();
-        }
+        public IServiceInstance GetLocalServiceInstance() => throw new NotImplementedException();
 
-        public IServiceInstance GetLocalServiceInstance()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task ShutdownAsync()
-        {
-            throw new NotImplementedException();
-        }
+        public Task ShutdownAsync() => throw new NotImplementedException();
     }
 }

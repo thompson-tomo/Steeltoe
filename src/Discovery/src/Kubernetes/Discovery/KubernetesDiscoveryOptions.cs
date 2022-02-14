@@ -58,9 +58,6 @@ namespace Steeltoe.Discovery.Kubernetes.Discovery
         /// <remarks>configuration property: eureka:client:cacheTTL</remarks>
         public int CacheTTL { get; set; } = 15;
 
-        public override string ToString()
-        {
-            return $"serviceName: {ServiceName}, serviceLabels: {ServiceLabels}";
-        }
+        public override string ToString() => $"serviceName: {ServiceName}, serviceLabels: {ServiceLabels}";
     }
 }

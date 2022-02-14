@@ -13,23 +13,14 @@ namespace Steeltoe.Discovery.Eureka
     {
         private readonly IOptionsMonitor<EurekaInstanceOptions> _instConfig;
 
-        private EurekaInstanceOptions InstConfig
-        {
-            get
-            {
-                return _instConfig.CurrentValue;
-            }
-        }
+        private EurekaInstanceOptions InstConfig => _instConfig.CurrentValue;
 
         public ThisServiceInstance(IOptionsMonitor<EurekaInstanceOptions> instConfig)
         {
             _instConfig = instConfig;
         }
 
-        public string GetHost()
-        {
-            return InstConfig.GetHostName(false);
-        }
+        public string GetHost() => InstConfig.GetHostName(false);
 
         public bool IsSecure => InstConfig.SecurePortEnabled;
 

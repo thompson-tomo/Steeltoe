@@ -109,10 +109,7 @@ namespace Steeltoe.Discovery.Kubernetes.Discovery
             }
         }
 
-        public Task ShutdownAsync()
-        {
-            return Task.CompletedTask;
-        }
+        public Task ShutdownAsync() => Task.CompletedTask;
 
         private IList<IServiceInstance> GetNamespacedServiceInstances(EndpointSubsetNs es, string serviceId)
         {

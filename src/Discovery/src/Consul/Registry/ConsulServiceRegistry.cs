@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the Apache 2.0 License.
 // See the LICENSE file in the project root for more information.
 
@@ -30,18 +30,7 @@ namespace Steeltoe.Discovery.Consul.Registry
         private readonly IOptionsMonitor<ConsulDiscoveryOptions> _optionsMonitor;
         private readonly ConsulDiscoveryOptions _options;
 
-        internal ConsulDiscoveryOptions Options
-        {
-            get
-            {
-                if (_optionsMonitor != null)
-                {
-                    return _optionsMonitor.CurrentValue;
-                }
-
-                return _options;
-            }
-        }
+        internal ConsulDiscoveryOptions Options => _optionsMonitor != null ? _optionsMonitor.CurrentValue : _options;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConsulServiceRegistry"/> class.

@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the Apache 2.0 License.
 // See the LICENSE file in the project root for more information.
 
@@ -29,15 +29,7 @@ namespace Steeltoe.Discovery.Eureka
 
         public virtual InstanceStatus InstanceStatus
         {
-            get
-            {
-                if (InstanceInfo == null)
-                {
-                    return InstanceStatus.UNKNOWN;
-                }
-
-                return InstanceInfo.Status;
-            }
+            get => InstanceInfo == null ? InstanceStatus.UNKNOWN : InstanceInfo.Status;
 
             set
             {
@@ -77,12 +69,7 @@ namespace Steeltoe.Discovery.Eureka
 
         public virtual void RefreshLeaseInfo()
         {
-            if (InstanceInfo == null || InstanceConfig == null)
-            {
-                return;
-            }
-
-            if (InstanceInfo.LeaseInfo == null)
+            if (InstanceInfo == null || InstanceConfig == null || InstanceInfo.LeaseInfo == null)
             {
                 return;
             }

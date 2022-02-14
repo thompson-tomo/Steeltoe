@@ -55,10 +55,7 @@ namespace Steeltoe.Discovery.Consul.Util
             return address;
         }
 
-        public static IDictionary<string, string> GetMetadata(ServiceEntry healthService)
-        {
-            return GetMetadata(healthService.Service.Tags);
-        }
+        public static IDictionary<string, string> GetMetadata(ServiceEntry healthService) => GetMetadata(healthService.Service.Tags);
 
         public static IDictionary<string, string> GetMetadata(IList<string> tags)
         {

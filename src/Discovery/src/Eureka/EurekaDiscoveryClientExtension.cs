@@ -45,10 +45,7 @@ namespace Steeltoe.Discovery.Eureka
             AddEurekaServices(services);
         }
 
-        public bool IsConfigured(IConfiguration configuration, IServiceInfo serviceInfo = null)
-        {
-            return configuration.GetSection(EUREKA_PREFIX).GetChildren().Any() || serviceInfo is EurekaServiceInfo;
-        }
+        public bool IsConfigured(IConfiguration configuration, IServiceInfo serviceInfo = null) => configuration.GetSection(EUREKA_PREFIX).GetChildren().Any() || serviceInfo is EurekaServiceInfo;
 
         internal void ConfigureEurekaServices(IServiceCollection services)
         {

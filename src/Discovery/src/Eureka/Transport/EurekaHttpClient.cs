@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the Apache 2.0 License.
 // See the LICENSE file in the project root for more information.
 
@@ -264,15 +264,9 @@ namespace Steeltoe.Discovery.Eureka.Transport
             throw new EurekaTransportException("Retry limit reached; giving up on completing the SendHeartBeatAsync request");
         }
 
-        public virtual Task<EurekaHttpResponse<Applications>> GetApplicationsAsync(ISet<string> regions = null)
-        {
-            return DoGetApplicationsAsync("apps/", regions);
-        }
+        public virtual Task<EurekaHttpResponse<Applications>> GetApplicationsAsync(ISet<string> regions = null) => DoGetApplicationsAsync("apps/", regions);
 
-        public virtual Task<EurekaHttpResponse<Applications>> GetDeltaAsync(ISet<string> regions = null)
-        {
-            return DoGetApplicationsAsync("apps/delta", regions);
-        }
+        public virtual Task<EurekaHttpResponse<Applications>> GetDeltaAsync(ISet<string> regions = null) => DoGetApplicationsAsync("apps/delta", regions);
 
         public virtual Task<EurekaHttpResponse<Applications>> GetVipAsync(string vipAddress, ISet<string> regions = null)
         {
@@ -284,10 +278,7 @@ namespace Steeltoe.Discovery.Eureka.Transport
             return GetVipAsyncInternal(vipAddress, regions);
         }
 
-        private Task<EurekaHttpResponse<Applications>> GetVipAsyncInternal(string vipAddress, ISet<string> regions)
-        {
-            return DoGetApplicationsAsync("vips/" + vipAddress, regions);
-        }
+        private Task<EurekaHttpResponse<Applications>> GetVipAsyncInternal(string vipAddress, ISet<string> regions) => DoGetApplicationsAsync("vips/" + vipAddress, regions);
 
         public virtual Task<EurekaHttpResponse<Applications>> GetSecureVipAsync(string secureVipAddress, ISet<string> regions = null)
         {
@@ -299,10 +290,7 @@ namespace Steeltoe.Discovery.Eureka.Transport
             return GetSecureVipAsyncInternal(secureVipAddress, regions);
         }
 
-        private Task<EurekaHttpResponse<Applications>> GetSecureVipAsyncInternal(string secureVipAddress, ISet<string> regions = null)
-        {
-            return DoGetApplicationsAsync("vips/" + secureVipAddress, regions);
-        }
+        private Task<EurekaHttpResponse<Applications>> GetSecureVipAsyncInternal(string secureVipAddress, ISet<string> regions = null) => DoGetApplicationsAsync("vips/" + secureVipAddress, regions);
 
         public virtual Task<EurekaHttpResponse<Application>> GetApplicationAsync(string appName)
         {
@@ -402,15 +390,9 @@ namespace Steeltoe.Discovery.Eureka.Transport
             return GetInstanceAsyncInternal(appName, id);
         }
 
-        private Task<EurekaHttpResponse<InstanceInfo>> GetInstanceAsyncInternal(string id)
-        {
-            return DoGetInstanceAsync("instances/" + id);
-        }
+        private Task<EurekaHttpResponse<InstanceInfo>> GetInstanceAsyncInternal(string id) => DoGetInstanceAsync("instances/" + id);
 
-        private Task<EurekaHttpResponse<InstanceInfo>> GetInstanceAsyncInternal(string appName, string id)
-        {
-            return DoGetInstanceAsync($"apps/{appName}/{id}");
-        }
+        private Task<EurekaHttpResponse<InstanceInfo>> GetInstanceAsyncInternal(string appName, string id) => DoGetInstanceAsync($"apps/{appName}/{id}");
 
         public virtual Task<EurekaHttpResponse> CancelAsync(string appName, string id)
         {

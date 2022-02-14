@@ -11,10 +11,7 @@ namespace Steeltoe.Discovery.Eureka.Transport
 {
     internal class JsonApplicationConverter : JsonConverter<List<JsonApplication>>
     {
-        public override bool CanConvert(Type typeToConvert)
-        {
-            return typeToConvert == typeof(IList<JsonApplication>);
-        }
+        public override bool CanConvert(Type typeToConvert) => typeToConvert == typeof(IList<JsonApplication>);
 
         public override List<JsonApplication> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
@@ -50,9 +47,6 @@ namespace Steeltoe.Discovery.Eureka.Transport
             return result;
         }
 
-        public override void Write(Utf8JsonWriter writer, List<JsonApplication> value, JsonSerializerOptions options)
-        {
-            writer.WriteStringValue(value.ToString());
-        }
+        public override void Write(Utf8JsonWriter writer, List<JsonApplication> value, JsonSerializerOptions options) => writer.WriteStringValue(value.ToString());
     }
 }

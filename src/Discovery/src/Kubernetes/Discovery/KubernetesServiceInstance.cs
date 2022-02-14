@@ -76,9 +76,6 @@ namespace Steeltoe.Discovery.Kubernetes.Discovery
         }
 #endif
 
-        public string GetScheme()
-        {
-            return IsSecure ? HttpsPrefix : HttpPrefix;
-        }
+        public string GetScheme() => IsSecure ? HttpsPrefix : HttpPrefix;
     }
 }

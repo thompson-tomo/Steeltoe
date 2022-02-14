@@ -125,25 +125,14 @@ namespace Steeltoe.Discovery.Eureka
             return HealthStatus.UNKNOWN;
         }
 
-        internal HealthStatus MakeHealthStatus(InstanceStatus lastRemoteInstanceStatus)
-        {
-            if (lastRemoteInstanceStatus == InstanceStatus.DOWN)
+        internal HealthStatus MakeHealthStatus(InstanceStatus lastRemoteInstanceStatus) =>
+            lastRemoteInstanceStatus switch
             {
-                return HealthStatus.DOWN;
-            }
-
-            if (lastRemoteInstanceStatus == InstanceStatus.OUT_OF_SERVICE)
-            {
-                return HealthStatus.OUT_OF_SERVICE;
-            }
-
-            if (lastRemoteInstanceStatus == InstanceStatus.UP)
-            {
-                return HealthStatus.UP;
-            }
-
-            return HealthStatus.UNKNOWN;
-        }
+                InstanceStatus.DOWN => HealthStatus.DOWN,
+                InstanceStatus.OUT_OF_SERVICE => HealthStatus.OUT_OF_SERVICE,
+                InstanceStatus.UP => HealthStatus.UP,
+                _ => HealthStatus.UNKNOWN
+            };
 
         internal void AddApplications(Applications applications, HealthCheckResult result)
         {
@@ -171,15 +160,11 @@ namespace Steeltoe.Discovery.Eureka
             }
         }
 
-        private long GetLastGoodRegistryFetchTimePeriod(long lastGoodRegistryFetchTimestamp)
-        {
-            return lastGoodRegistryFetchTimestamp <= 0L ? lastGoodRegistryFetchTimestamp : DateTime.UtcNow.Ticks - lastGoodRegistryFetchTimestamp;
-        }
+        private long GetLastGoodRegistryFetchTimePeriod(long lastGoodRegistryFetchTimestamp) =>
+            lastGoodRegistryFetchTimestamp <= 0L ? lastGoodRegistryFetchTimestamp : DateTime.UtcNow.Ticks - lastGoodRegistryFetchTimestamp;
 
-        private long GetLastGoodHeartbeatTimePeriod(long lastGoodHeartbeatTimestamp)
-        {
-            return lastGoodHeartbeatTimestamp <= 0L ? lastGoodHeartbeatTimestamp : DateTime.UtcNow.Ticks - lastGoodHeartbeatTimestamp;
-        }
+        private long GetLastGoodHeartbeatTimePeriod(long lastGoodHeartbeatTimestamp) =>
+            lastGoodHeartbeatTimestamp <= 0L ? lastGoodHeartbeatTimestamp : DateTime.UtcNow.Ticks - lastGoodHeartbeatTimestamp;
 
         public string Id => "eurekaServer";
     }

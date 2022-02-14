@@ -18,10 +18,7 @@ namespace Steeltoe.Discovery.Eureka
             _info = info;
         }
 
-        public string GetHost()
-        {
-            return _info.HostName;
-        }
+        public string GetHost() => _info.HostName;
 
         public bool IsSecure => _info.IsSecurePortEnabled;
 

@@ -19,14 +19,8 @@ namespace Steeltoe.Discovery.Client
             _discoveryClient = client;
         }
 
-        public Task StartAsync(CancellationToken cancellationToken)
-        {
-            return Task.CompletedTask;
-        }
+        public Task StartAsync(CancellationToken cancellationToken) => Task.CompletedTask;
 
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            return _discoveryClient.ShutdownAsync();
-        }
+        public Task StopAsync(CancellationToken cancellationToken) => _discoveryClient.ShutdownAsync();
     }
 }

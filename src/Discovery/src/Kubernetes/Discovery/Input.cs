@@ -21,24 +21,12 @@ namespace Steeltoe.Discovery.Kubernetes.Discovery
             _serviceAnnotations = serviceAnnotations ?? new Dictionary<string, string>();
         }
 
-        public string GetServiceName()
-        {
-            return _serviceName;
-        }
+        public string GetServiceName() => _serviceName;
 
-        public IDictionary<string, string> GetServiceLabels()
-        {
-            return _serviceLabels;
-        }
+        public IDictionary<string, string> GetServiceLabels() => _serviceLabels;
 
-        public IDictionary<string, string> GetServiceAnnotations()
-        {
-            return _serviceAnnotations;
-        }
+        public IDictionary<string, string> GetServiceAnnotations() => _serviceAnnotations;
 
-        public int? GetPort()
-        {
-            return _port;
-        }
+        public int? GetPort() => _port;
     }
 }

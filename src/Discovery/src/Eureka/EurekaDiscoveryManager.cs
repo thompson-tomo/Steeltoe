@@ -25,20 +25,8 @@ namespace Steeltoe.Discovery.Eureka
             Client = client;
         }
 
-        public override IEurekaClientConfig ClientConfig
-        {
-            get
-            {
-                return _clientConfig.CurrentValue;
-            }
-        }
+        public override IEurekaClientConfig ClientConfig => _clientConfig.CurrentValue;
 
-        public override IEurekaInstanceConfig InstanceConfig
-        {
-            get
-            {
-                return _instConfig.CurrentValue;
-            }
-        }
+        public override IEurekaInstanceConfig InstanceConfig => _instConfig.CurrentValue;
     }
 }

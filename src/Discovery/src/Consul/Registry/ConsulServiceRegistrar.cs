@@ -28,18 +28,7 @@ namespace Steeltoe.Discovery.Consul.Registry
         /// <inheritdoc/>
         public IConsulRegistration Registration { get; }
 
-        internal ConsulDiscoveryOptions Options
-        {
-            get
-            {
-                if (_optionsMonitor != null)
-                {
-                    return _optionsMonitor.CurrentValue;
-                }
-
-                return _options;
-            }
-        }
+        internal ConsulDiscoveryOptions Options => _optionsMonitor != null ? _optionsMonitor.CurrentValue : _options;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConsulServiceRegistrar"/> class.
