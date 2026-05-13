@@ -157,7 +157,7 @@ public static partial class PrometheusExtensions
             LogEndpointRoutingRequired(logger);
         }
 
-        if (managementOptions.Port == 0 && !applyActuatorConventions && configurePrometheusPipeline is null)
+        if (managementOptions.Port is not (> 0 and < 65536) && !applyActuatorConventions && configurePrometheusPipeline is null)
         {
             LogPrometheusEndpointNotSecure(logger);
         }

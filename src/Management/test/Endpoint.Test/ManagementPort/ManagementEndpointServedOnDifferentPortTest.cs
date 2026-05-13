@@ -104,6 +104,44 @@ public sealed class ManagementEndpointServedOnDifferentPortTest
     }
 
     [Fact]
+    public async Task AspNetDefaultPort_AlternateManagementPortConfigured_IgnoresSpoofedHostHeader()
+    {
+        const string managementPort = "8000";
+
+        var appSettings = new Dictionary<string, string?>
+        {
+            ["Management:Endpoints:Port"] = managementPort
+        };
+
+        await using WebApplication app = await CreateAppAsync(appSettings);
+
+        IFeatureCollection serverFeatures = app.Services.GetRequiredService<IServer>().Features;
+        ICollection<string> addresses = serverFeatures.GetRequiredFeature<IServerAddressesFeature>().Addresses;
+
+        addresses.Should().HaveCount(2);
+        addresses.ElementAt(0).Should().Be($"http://localhost:{AspNetDefaultPort}");
+        addresses.ElementAt(1).Should().Be($"http://[::]:{managementPort}");
+
+        using HttpClient httpClient = CreateHttpClient();
+
+        HttpResponseMessage appResponse = await httpClient.GetAsync(new Uri($"http://localhost:{AspNetDefaultPort}"), TestContext.Current.CancellationToken);
+        appResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+
+        appResponse = await httpClient.GetAsync(new Uri($"http://localhost:{managementPort}"), TestContext.Current.CancellationToken);
+        appResponse.StatusCode.Should().Be(HttpStatusCode.NotFound);
+
+        HttpResponseMessage actuatorResponse =
+            await httpClient.GetAsync(new Uri($"http://localhost:{AspNetDefaultPort}/actuator"), TestContext.Current.CancellationToken);
+
+        actuatorResponse.StatusCode.Should().Be(HttpStatusCode.NotFound);
+
+        var spoofRequest = new HttpRequestMessage(HttpMethod.Get, new Uri($"http://localhost:{AspNetDefaultPort}/actuator"));
+        spoofRequest.Headers.Host = $"anything:{managementPort}";
+        actuatorResponse = await httpClient.SendAsync(spoofRequest, TestContext.Current.CancellationToken);
+        actuatorResponse.StatusCode.Should().Be(HttpStatusCode.NotFound);
+    }
+
+    [Fact]
     public async Task AspNetDefaultPort_AlternateManagementPortConfigured_AccessibleOnCfInstancePorts()
     {
         const string managementPort = "8090";

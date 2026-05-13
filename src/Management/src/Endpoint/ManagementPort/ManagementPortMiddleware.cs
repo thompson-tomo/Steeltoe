@@ -38,7 +38,7 @@ internal sealed partial class ManagementPortMiddleware
         ManagementOptions managementOptions = _managementOptionsMonitor.CurrentValue;
         LogEntering(context.Request.Path.Value, managementOptions.Path);
 
-        bool allowRequest = IsRequestAllowed(context.Request, managementOptions);
+        bool allowRequest = IsRequestAllowed(context, managementOptions);
 
         if (!allowRequest)
         {
@@ -53,13 +53,15 @@ internal sealed partial class ManagementPortMiddleware
         }
     }
 
-    private bool IsRequestAllowed(HttpRequest request, ManagementOptions managementOptions)
+    private bool IsRequestAllowed(HttpContext context, ManagementOptions managementOptions)
     {
         if (managementOptions.Port is > 0 and < 65536)
         {
-            bool isManagementPath = request.Path.StartsWithSegments(managementOptions.Path);
-            bool isManagementScheme = managementOptions.SslEnabled ? request.Scheme == Uri.UriSchemeHttps : request.Scheme == Uri.UriSchemeHttp;
-            bool isManagementPort = request.Host.Port == managementOptions.Port || HasMappedInstancePort(managementOptions.Port, request.Host.Port);
+            bool isManagementPath = context.Request.Path.StartsWithSegments(managementOptions.Path);
+            bool isManagementScheme = managementOptions.SslEnabled ? context.Request.Scheme == Uri.UriSchemeHttps : context.Request.Scheme == Uri.UriSchemeHttp;
+
+            bool isManagementPort = context.Connection.LocalPort == managementOptions.Port ||
+                HasMappedInstancePort(managementOptions.Port, context.Connection.LocalPort);
 
             return isManagementPath ? isManagementScheme && isManagementPort : !isManagementScheme || !isManagementPort;
         }
@@ -92,14 +94,7 @@ internal sealed partial class ManagementPortMiddleware
 
     private void SetResponseError(HttpContext context, int managementPort)
     {
-        int? defaultPort = null;
-
-        if (context.Request.Host.Port == null)
-        {
-            defaultPort = context.Request.Scheme == "http" ? 80 : 443;
-        }
-
-        LogAccessDenied(context.Request.Path, defaultPort ?? context.Request.Host.Port, managementPort);
+        LogAccessDenied(context.Request.Path, context.Connection.LocalPort, managementPort);
 
         context.Response.StatusCode = StatusCodes.Status404NotFound;
     }
