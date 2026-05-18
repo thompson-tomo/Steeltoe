@@ -48,7 +48,7 @@ public sealed class EnvironmentActuatorTest
 
         EnvironmentEndpointOptions options = serviceProvider.GetRequiredService<IOptions<EnvironmentEndpointOptions>>().Value;
 
-        options.KeysToSanitize.Should().BeEquivalentTo("password", "secret", "key", "token", ".*credentials.*", "vcap_services");
+        options.KeysToSanitize.Should().BeEquivalentTo("password", "secret", "key", "token", ".*credentials.*", "vcap_services", ".*connectionstring.*");
         options.Enabled.Should().BeNull();
         options.Id.Should().Be("env");
         options.Path.Should().Be("env");
@@ -149,10 +149,13 @@ public sealed class EnvironmentActuatorTest
     {
         var appSettings = new Dictionary<string, string?>(AppSettings)
         {
+            ["App:ShippingDatabaseQueue"] = "amqp://user:pass@shipping.db.com",
+            ["ConnectionStrings:Default"] = "Server=db;User Id=app;Password=secret123;",
+            ["Do:Not:Show:This:Secret"] = "hidden-in-response",
             ["Logging:LogLevel:Default"] = "Warning",
             ["Logging:LogLevel:Steeltoe"] = "Information",
             ["Logging:LogLevel:TestApp"] = "Error",
-            ["Do:Not:Show:This:Secret"] = "hidden-in-response"
+            ["OrderDbConnection"] = "Server=orders.db.com;Database=orders;Pwd=order-pass;Uid=order-user"
         };
 
         await using HostWrapper host = hostBuilderType.Build(builder =>
@@ -187,6 +190,12 @@ public sealed class EnvironmentActuatorTest
                 {
                   "name": "MemoryConfigurationProvider",
                   "properties": {
+                    "App:ShippingDatabaseQueue": {
+                      "value": "amqp://user:******@shipping.db.com"
+                    },
+                    "ConnectionStrings:Default": {
+                      "value": "******"
+                    },
                     "Do:Not:Show:This:Secret": {
                       "value": "******"
                     },
@@ -201,6 +210,9 @@ public sealed class EnvironmentActuatorTest
                     },
                     "Management:Endpoints:Actuator:Exposure:Include:0": {
                       "value": "env"
+                    },
+                    "OrderDbConnection": {
+                      "value": "Server=orders.db.com;Database=orders;Pwd=******;Uid=order-user"
                     }
                   }
                 }
