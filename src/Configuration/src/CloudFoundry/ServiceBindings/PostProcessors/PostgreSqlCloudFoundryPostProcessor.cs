@@ -62,9 +62,11 @@ internal sealed class PostgreSqlCloudFoundryPostProcessor : CloudFoundryPostProc
             }
 
             mapper.MapFromTo("credentials:password", "password");
-            mapper.MapFromToFile("credentials:sslcert", "SSL Certificate");
-            mapper.MapFromToFile("credentials:sslkey", "SSL Key");
-            mapper.MapFromToFile("credentials:sslrootcert", "Root Certificate");
+            string? sslCertFile = mapper.MapFromToFile("credentials:sslcert", "SSL Certificate");
+            string? sslKeyFile = mapper.MapFromToFile("credentials:sslkey", "SSL Key");
+            string? sslRootCertFile = mapper.MapFromToFile("credentials:sslrootcert", "Root Certificate");
+
+            TrackTempFiles(sslCertFile, sslKeyFile, sslRootCertFile);
         }
     }
 }

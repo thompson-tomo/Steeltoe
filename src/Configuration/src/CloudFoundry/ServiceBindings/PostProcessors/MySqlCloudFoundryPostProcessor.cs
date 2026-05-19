@@ -25,9 +25,11 @@ internal sealed class MySqlCloudFoundryPostProcessor : CloudFoundryPostProcessor
             mapper.MapFromTo("credentials:name", "database");
             mapper.MapFromTo("credentials:username", "username");
             mapper.MapFromTo("credentials:password", "password");
-            mapper.MapFromToFile("credentials:sslCert", "ssl-cert");
-            mapper.MapFromToFile("credentials:sslKey", "ssl-key");
-            mapper.MapFromToFile("credentials:sslRootCert", "ssl-ca");
+            string? sslCertFile = mapper.MapFromToFile("credentials:sslCert", "ssl-cert");
+            string? sslKeyFile = mapper.MapFromToFile("credentials:sslKey", "ssl-key");
+            string? sslRootCertFile = mapper.MapFromToFile("credentials:sslRootCert", "ssl-ca");
+
+            TrackTempFiles(sslCertFile, sslKeyFile, sslRootCertFile);
         }
     }
 }
