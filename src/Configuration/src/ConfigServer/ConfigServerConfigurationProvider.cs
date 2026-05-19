@@ -697,6 +697,12 @@ internal sealed partial class ConfigServerConfigurationProvider : ConfigurationP
                         throw new HttpRequestException($"Config Server returned status: {response.StatusCode} invoking path: {masked}");
                     }
 
+                    if ((int)response.StatusCode >= 300)
+                    {
+                        MaskedUri masked = response.Headers.Location;
+                        LogConfigServerRedirected((int)response.StatusCode, masked);
+                    }
+
                     return null;
                 }
 
@@ -922,6 +928,14 @@ internal sealed partial class ConfigServerConfigurationProvider : ConfigurationP
 
     private static void ConfigureHttpClientHandler(HttpClientHandler httpClientHandler, ConfigServerClientOptions optionsSnapshot)
     {
+        if (!string.IsNullOrEmpty(optionsSnapshot.Token))
+        {
+            // Disable AutoRedirect to prevent credential leaks. HttpClientHandler strips the Authorization header
+            // on redirects but does not strip custom headers (X-Vault-Token, X-Config-Token), which this handler
+            // uses for Vault token renewal and Config Server fetches.
+            httpClientHandler.AllowAutoRedirect = false;
+        }
+
         httpClientHandler.ClientCertificates.Clear();
 
         var clientCertificateConfigurer = new ClientCertificateHttpClientHandlerConfigurer(OptionsMonitorWrapper.Create(optionsSnapshot.ClientCertificate));
@@ -1065,6 +1079,11 @@ internal sealed partial class ConfigServerConfigurationProvider : ConfigurationP
 
     [LoggerMessage(Level = LogLevel.Debug, Message = "Config Server returned status {StatusCode} for path {RequestUri}.")]
     private partial void LogConfigServerReturnedStatus(MaskedUri requestUri, HttpStatusCode statusCode);
+
+    [LoggerMessage(Level = LogLevel.Warning,
+        Message =
+            "Config Server returned a {StatusCode} redirect to '{Uri}'. Redirects are not followed to prevent credential leaks. Update 'spring:cloud:config:uri' to point directly to the target.")]
+    private partial void LogConfigServerRedirected(int statusCode, MaskedUri uri);
 
     [LoggerMessage(Level = LogLevel.Trace, Message = "Parsing JSON response.")]
     private partial void LogParsingJsonResponse();
