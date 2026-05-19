@@ -11,6 +11,11 @@ public sealed class EnvironmentEndpointOptions : EndpointOptions
     private Sanitizer? _sanitizer;
 
     /// <summary>
+    /// Gets or sets the permissions required to access this endpoint, when running on Cloud Foundry. Default value: Full.
+    /// </summary>
+    public override EndpointPermissions RequiredPermissions { get; set; } = EndpointPermissions.Full;
+
+    /// <summary>
     /// Gets the list of keys to sanitize. A key can be a simple string that the property must end with, or a regular expression. A case-insensitive match is
     /// always performed. Use a single-element empty string to disable sanitization. Default value:
     /// <code><![CDATA[

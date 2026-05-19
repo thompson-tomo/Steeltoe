@@ -52,7 +52,7 @@ public sealed class EnvironmentActuatorTest
         options.Enabled.Should().BeNull();
         options.Id.Should().Be("env");
         options.Path.Should().Be("env");
-        options.RequiredPermissions.Should().Be(EndpointPermissions.Restricted);
+        options.RequiredPermissions.Should().Be(EndpointPermissions.Full);
 
         options.GetSafeAllowedVerbs().Should().ContainSingle().Subject.Should().Be("GET");
         options.RequiresExactMatch().Should().BeTrue();

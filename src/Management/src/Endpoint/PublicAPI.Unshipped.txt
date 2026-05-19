@@ -1,2 +1,8 @@
 #nullable enable
 Steeltoe.Management.Endpoint.Actuators.HttpExchanges.HttpExchangeRequest.JsonUri.get -> string!
+override Steeltoe.Management.Endpoint.Actuators.Environment.EnvironmentEndpointOptions.RequiredPermissions.get -> Steeltoe.Management.Configuration.EndpointPermissions
+override Steeltoe.Management.Endpoint.Actuators.Environment.EnvironmentEndpointOptions.RequiredPermissions.set -> void
+override Steeltoe.Management.Endpoint.Actuators.HeapDump.HeapDumpEndpointOptions.RequiredPermissions.get -> Steeltoe.Management.Configuration.EndpointPermissions
+override Steeltoe.Management.Endpoint.Actuators.HeapDump.HeapDumpEndpointOptions.RequiredPermissions.set -> void
+override Steeltoe.Management.Endpoint.Actuators.ThreadDump.ThreadDumpEndpointOptions.RequiredPermissions.get -> Steeltoe.Management.Configuration.EndpointPermissions
+override Steeltoe.Management.Endpoint.Actuators.ThreadDump.ThreadDumpEndpointOptions.RequiredPermissions.set -> void
