@@ -9,14 +9,11 @@ using Steeltoe.Common.TestResources;
 
 namespace Steeltoe.Configuration.ConfigServer.Integration.Test;
 
-// NOTE: Some of the tests assume a running Spring Cloud Config Server is started
+// NOTE: These tests assume Spring Cloud Config Server (and sometimes Eureka Server) is running
 //       with repository data for application: foo, profile: development
 //
-//       The easiest way to get that to happen is clone the spring-cloud-config
-//       repo and run the config-server.
-//          e.g. git clone https://github.com/spring-cloud/spring-cloud-config.git
-//               cd spring-cloud-config\spring-cloud-config-server
-//               mvn spring-boot:run
+//       The easiest way to run the servers is with docker compose
+//       (see docker-compose.yml at the repo root)
 public sealed class ConfigServerConfigurationExtensionsIntegrationTest
 {
     [Fact]
