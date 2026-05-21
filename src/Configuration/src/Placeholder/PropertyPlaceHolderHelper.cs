@@ -202,7 +202,7 @@ internal sealed partial class PropertyPlaceholderHelper
         return builder.ToString()[start..end];
     }
 
-    [LoggerMessage(Level = LogLevel.Debug, Message = "Resolved placeholder '{Placeholder}' to '{Value}'.")]
+    [LoggerMessage(Level = LogLevel.Trace, Message = "Resolved placeholder '{Placeholder}' to '{Value}'.")]
     private partial void LogPlaceholderResolved(string placeholder, string value);
 
     private readonly struct PlaceholderExpression(string key, string? defaultValue) : IEquatable<PlaceholderExpression>
