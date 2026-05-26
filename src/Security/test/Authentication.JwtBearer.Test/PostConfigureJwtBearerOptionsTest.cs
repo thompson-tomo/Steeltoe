@@ -5,6 +5,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 using Steeltoe.Common.TestResources;
 using Steeltoe.Configuration.CloudFoundry.ServiceBindings;
@@ -27,7 +28,8 @@ public sealed class PostConfigureJwtBearerOptionsTest
         };
 
         IConfiguration configuration = new ConfigurationBuilder().AddInMemoryCollection(appSettings).Build();
-        var postConfigurer = new PostConfigureJwtBearerOptions(configuration);
+        using var resolver = new TokenKeyResolver(TimeProvider.System, NullLoggerFactory.Instance);
+        var postConfigurer = new PostConfigureJwtBearerOptions(configuration, resolver);
 
         postConfigurer.PostConfigure(null, jwtBearerOptions);
 
@@ -66,6 +68,7 @@ public sealed class PostConfigureJwtBearerOptionsTest
         IConfiguration configuration = new ConfigurationBuilder().AddCloudFoundryServiceBindings(CloudFoundryServiceBrokerTypes.Identity).Build();
         var services = new ServiceCollection();
         services.AddSingleton(configuration);
+        services.AddLogging();
         services.AddAuthentication().AddJwtBearer().ConfigureJwtBearerForCloudFoundry();
 
         await using ServiceProvider serviceProvider = services.BuildServiceProvider(true);
@@ -114,6 +117,7 @@ public sealed class PostConfigureJwtBearerOptionsTest
         IConfiguration configuration = new ConfigurationBuilder().AddCloudFoundryServiceBindings(CloudFoundryServiceBrokerTypes.Identity).Build();
         var services = new ServiceCollection();
         services.AddSingleton(configuration);
+        services.AddLogging();
         services.AddAuthentication().AddJwtBearer().ConfigureJwtBearerForCloudFoundry();
 
         await using ServiceProvider serviceProvider = services.BuildServiceProvider(true);
