@@ -75,7 +75,6 @@ jobs:
         fetch-depth: 0
 
     - name: Provide jks file for Config Server container
-      if: ${{ matrix.runDockerContainers }}
       # The Config Server container starts before checkout, when server.jks is not yet available.
       # Copy it into the container now and restart so Config Server can pick up the keystore.
       shell: bash
