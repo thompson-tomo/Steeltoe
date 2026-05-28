@@ -45,6 +45,13 @@ jobs:
           eureka.client.serviceUrl.defaultZone: http://eurekaServer:8761/eureka
           eureka.instance.hostname: localhost
           eureka.instance.instanceId: localhost:configServer:8888
+          encrypt.keyStore.location: file:///workspace/server.jks
+          encrypt.keyStore.password: letmein
+          encrypt.keyStore.alias: mytestkey
+          encrypt.rsa.algorithm: OAEP
+          encrypt.rsa.salt: deadbeef
+          encrypt.rsa.strong: "false"
+        options: --name steeltoe-config
         ports:
         - 8888:8888
 
@@ -66,6 +73,15 @@ jobs:
         persist-credentials: false
         # Sonar: Shallow clones should be disabled for a better relevancy of analysis.
         fetch-depth: 0
+
+    - name: Provide jks file for Config Server container
+      if: ${{ matrix.runDockerContainers }}
+      # The Config Server container starts before checkout, when server.jks is not yet available.
+      # Copy it into the container now and restart so Config Server can pick up the keystore.
+      shell: bash
+      run: |
+        docker cp src/Configuration/test/Encryption.Test/Cryptography/server.jks steeltoe-config:/workspace/server.jks
+        docker restart steeltoe-config
 
     - name: Begin Sonar .NET scanner
       id: sonar_begin
