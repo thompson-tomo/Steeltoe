@@ -63,6 +63,8 @@ Steeltoe.Connectors.ConnectorConfigureOptionsBuilder
 Steeltoe.Connectors.ConnectorConfigureOptionsBuilder.ConnectorConfigureOptionsBuilder() -> void
 Steeltoe.Connectors.ConnectorConfigureOptionsBuilder.DetectConfigurationChanges.get -> bool
 Steeltoe.Connectors.ConnectorConfigureOptionsBuilder.DetectConfigurationChanges.set -> void
+Steeltoe.Connectors.ConnectorConfigureOptionsBuilder.SkipDefaultServiceBindings.get -> bool
+Steeltoe.Connectors.ConnectorConfigureOptionsBuilder.SkipDefaultServiceBindings.set -> void
 Steeltoe.Connectors.ConnectorCreateConnection
 Steeltoe.Connectors.ConnectorCreateHealthContributor
 Steeltoe.Connectors.ConnectorFactory<TOptions, TConnection>

@@ -1,5 +1,1 @@
 #nullable enable
-*REMOVED*Steeltoe.Management.Configuration.EndpointOptions.RequiredPermissions.get -> Steeltoe.Management.Configuration.EndpointPermissions
-*REMOVED*Steeltoe.Management.Configuration.EndpointOptions.RequiredPermissions.set -> void
-virtual Steeltoe.Management.Configuration.EndpointOptions.RequiredPermissions.get -> Steeltoe.Management.Configuration.EndpointPermissions
-virtual Steeltoe.Management.Configuration.EndpointOptions.RequiredPermissions.set -> void
